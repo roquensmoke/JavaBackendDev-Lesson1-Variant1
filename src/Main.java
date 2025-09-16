@@ -27,18 +27,27 @@ public class Main
 
         ArrayService obArray;
         if (nMax == nMin) {
-            obArray = new ArrayService(
-                dimension,
-                arrayType == 0 ? ArrayTypeEnum.INT : ArrayTypeEnum.DOUBLE
-            );
+            obArray = ArrayService.create(dimension, arrayType == 0 ? ArrayTypeEnum.INT : ArrayTypeEnum.DOUBLE);
         } else {
-            obArray = new ArrayService(
+            obArray = ArrayService.create(
                 dimension,
                 arrayType == 0 ? ArrayTypeEnum.INT : ArrayTypeEnum.DOUBLE,
                 nMin,
                 nMax
             );
         }
+
+        System.out.println("Исходный массив: ");
+        obArray.printToStream(System.out);
+
+        System.out.println("Максимальный элемент: ");
+        System.out.println(obArray.getMaxElement());
+        System.out.println("Минимальный элемент: ");
+        System.out.println(obArray.getMinElement());
+        System.out.println("Среднее значение: ");
+        System.out.println(obArray.getAverage());
+        System.out.println("Сортированный массив: ");
+        obArray.sortBubble();
         obArray.printToStream(System.out);
 
         scanner.close();

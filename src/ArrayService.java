@@ -1,12 +1,31 @@
 import java.io.PrintStream;
 
-public class ArrayService
+public abstract class ArrayService
 {
+    protected static final int nLowest = 0;
+    protected static final int nHighest = 100;
+
     protected double[] arData;
     protected int dimension;
     protected ArrayTypeEnum arrayType;
 
-    public ArrayService(int dim, ArrayTypeEnum arrayType)
+    public static ArrayService create(int dim, ArrayTypeEnum arrayType, int lowestNum, int highestNum)
+    {
+        return switch (arrayType) {
+            case INT -> new ArrayIntService(dim, arrayType, lowestNum, highestNum);
+            case DOUBLE -> new ArrayDoubleService(dim, arrayType, lowestNum, highestNum);
+        };
+    }
+
+    public static ArrayService create(int dim, ArrayTypeEnum arrayType)
+    {
+        return switch (arrayType) {
+            case INT -> new ArrayIntService(dim, arrayType, nLowest, nHighest);
+            case DOUBLE -> new ArrayDoubleService(dim, arrayType, nLowest, nHighest);
+        };
+    }
+
+    protected ArrayService(int dim, ArrayTypeEnum arrayType)
     {
         this.dimension = dim;
         this.arData = new double[this.dimension];
@@ -14,7 +33,7 @@ public class ArrayService
         this.initArrayData(0, 100);
     }
 
-    public ArrayService(int dim, ArrayTypeEnum arrayType, int lowestNum, int highestNum)
+    protected ArrayService(int dim, ArrayTypeEnum arrayType, int lowestNum, int highestNum)
     {
         this.dimension = dim;
         this.arData = new double[this.dimension];
@@ -22,33 +41,53 @@ public class ArrayService
         this.initArrayData(lowestNum, highestNum);
     }
 
-    protected void initArrayData(int lowestNum, int highestNum)
+    public String getMaxElement()
     {
-        int lenInterval = highestNum - lowestNum + 1;
+        var max = this.arData[0];
+        for (int i = 1; i < this.dimension; ++i) {
+            if (this.arData[i] > max) {
+                max = this.arData[i];
+            }
+        }
+        return this.format(max);
+    }
+
+    public String getMinElement()
+    {
+        var min = this.arData[0];
+        for (int i = 1; i < this.dimension; ++i) {
+            if (this.arData[i] < min) {
+                min = this.arData[i];
+            }
+        }
+        return this.format(min);
+    }
+
+    public String getAverage()
+    {
+        var sum = 0.;
         for (int i = 0; i < this.dimension; ++i) {
-            //по-хорошему, это надо делать полиморфизмом
-            switch (this.arrayType) {
-                case INT:
-                    this.arData[i] = lowestNum + (int)Math.floor(Math.random() * lenInterval);
-                    break;
-                case DOUBLE:
-                    this.arData[i] = lowestNum + (Math.random() * lenInterval);
-                    break;
+            sum += this.arData[i];
+        }
+        return this.format(sum / this.dimension);
+    }
+
+    public void sortBubble()
+    {
+        for (int i = 0; i < this.dimension - 1; ++i) {
+            for (int j = i + 1; j < this.dimension; ++j) {
+                if (this.arData[i] > this.arData[j]) {
+                    var tmp = this.arData[i];
+                    this.arData[i] = this.arData[j];
+                    this.arData[j] = tmp;
+                }
             }
         }
     }
 
-    public void printToStream(PrintStream out)
-    {
-        for (int i = 0; i < this.dimension; ++i) {
-            switch (this.arrayType) {
-                case INT:
-                    out.println((int)this.arData[i]);
-                    break;
-                case DOUBLE:
-                    out.println(this.arData[i]);
-                    break;
-            }
-        }
-    }
+    abstract protected String format(double num);
+
+    abstract protected void initArrayData(int lowestNum, int highestNum);
+
+    abstract public void printToStream(PrintStream out);
 }
