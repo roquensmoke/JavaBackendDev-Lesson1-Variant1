@@ -47,7 +47,7 @@ public class Main
         System.out.println("Среднее значение: ");
         System.out.println(obArray.getAverage());
         System.out.println("Сортированный массив: ");
-        obArray.sortBubble();
+        obArray.sortBubbleAscending();
         obArray.printToStream(System.out);
 
         scanner.close();

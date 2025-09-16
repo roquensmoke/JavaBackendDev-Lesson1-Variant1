@@ -72,7 +72,7 @@ public abstract class ArrayService
         return this.format(sum / this.dimension);
     }
 
-    public void sortBubble()
+    public void sortBubbleAscending()
     {
         for (int i = 0; i < this.dimension - 1; ++i) {
             for (int j = i + 1; j < this.dimension; ++j) {
