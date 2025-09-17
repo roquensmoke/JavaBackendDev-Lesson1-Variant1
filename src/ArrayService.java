@@ -1,4 +1,5 @@
 import java.io.PrintStream;
+import java.util.Arrays;
 
 public abstract class ArrayService
 {
@@ -83,6 +84,12 @@ public abstract class ArrayService
                 }
             }
         }
+        return this;
+    }
+
+    public ArrayService sortWithArraysUtil()
+    {
+        Arrays.sort(this.arData);
         return this;
     }
 
