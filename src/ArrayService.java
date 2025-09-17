@@ -2,8 +2,8 @@ import java.io.PrintStream;
 
 public abstract class ArrayService
 {
-    protected static final int nLowest = 0;
-    protected static final int nHighest = 100;
+    protected static final int N_LOWEST = 0;
+    protected static final int N_HIGHEST = 100;
 
     protected double[] arData;
     protected int dimension;
@@ -20,8 +20,8 @@ public abstract class ArrayService
     public static ArrayService create(int dim, ArrayTypeEnum arrayType)
     {
         return switch (arrayType) {
-            case INT -> new ArrayIntService(dim, arrayType, nLowest, nHighest);
-            case DOUBLE -> new ArrayDoubleService(dim, arrayType, nLowest, nHighest);
+            case INT -> new ArrayIntService(dim, arrayType, N_LOWEST, N_HIGHEST);
+            case DOUBLE -> new ArrayDoubleService(dim, arrayType, N_LOWEST, N_HIGHEST);
         };
     }
 
