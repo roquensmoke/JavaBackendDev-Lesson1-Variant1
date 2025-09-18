@@ -31,7 +31,7 @@ public abstract class ArrayService
         this.dimension = dim;
         this.arData = new double[this.dimension];
         this.arrayType = arrayType;
-        this.initArrayData(0, 100);
+        this.initArrayData(N_LOWEST, N_HIGHEST);
     }
 
     protected ArrayService(int dim, ArrayTypeEnum arrayType, int lowestNum, int highestNum)
